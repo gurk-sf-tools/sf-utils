@@ -24,15 +24,28 @@ GurkUtils.Documents.validation;
 // Access SpanishDocumentValidation
 GurkUtils.Documents.validation.Spain;
 
+// Validate DNI
+Boolean isValid = GurkUtils.Documents.validation.Spain.isDNIValid('12345678Z');
+
+// Validate NIE
+Boolean isValid = GurkUtils.Documents.validation.Spain.isNIEValid('X1234567Z');
+
+// Validate CIF
+Boolean isValid = GurkUtils.Documents.validation.Spain.isCIFValid('A12345678');
+
 // Access DocumentGenerationUtil
 GurkUtils.Documents.generator;
 
 // Access SpanishDocumentGenerator
 GurkUtils.Documents.generator.Spain;
 
-// Use generation methods
+// Generate DNI
 String dni = GurkUtils.Documents.generator.Spain.generateDNI();
+
+// Generate NIE
 String nie = GurkUtils.Documents.generator.Spain.generateNIE();
+
+// Generate CIF
 String cif = GurkUtils.Documents.generator.Spain.generateCIF();
 ```
 
