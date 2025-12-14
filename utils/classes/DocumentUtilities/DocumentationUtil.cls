@@ -1,9 +1,9 @@
-public with sharing class DocumentUtils
+public with sharing class DocumentationUtil
 {
     private static DocumentValidationUtil validation_instance;
     private static DocumentGenerationUtil generation_instance;
 
-    public DocumentValidationUtil validation
+    public DocumentValidationUtil Validation
     {
         get
         {
@@ -16,7 +16,7 @@ public with sharing class DocumentUtils
         private set;
     }
 
-    public DocumentGenerationUtil generator
+    public DocumentGenerationUtil Generator
     {
         get
         {
@@ -28,5 +28,4 @@ public with sharing class DocumentUtils
         }
         private set;
     }
-
 }

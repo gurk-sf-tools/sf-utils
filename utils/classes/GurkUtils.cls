@@ -1,14 +1,14 @@
 public with sharing class GurkUtils
 {
-    private static DocumentUtils documents_instance;
+    private static DocumentationUtil documents_instance;
 
-    public static DocumentUtils Documents
+    public static DocumentationUtil Documents
     {
         get
         {
             if ( documents_instance == null)
             {
-                documents_instance = new DocumentUtils();
+                documents_instance = new DocumentationUtil();
             }
             return documents_instance;
         }

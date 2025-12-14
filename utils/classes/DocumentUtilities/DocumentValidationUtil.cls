@@ -1,7 +1,6 @@
 public with sharing class DocumentValidationUtil
 {
     private static SpanishDocumentValidation spain_instance;
-
     public SpanishDocumentValidation Spain
     {
         get
@@ -14,4 +13,10 @@ public with sharing class DocumentValidationUtil
         }
         private set;
     }
+
+    public Boolean isEmailValid(String email)
+    {
+        return true;
+    }
+
 }
