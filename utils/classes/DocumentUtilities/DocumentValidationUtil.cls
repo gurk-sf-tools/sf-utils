@@ -1,17 +1,35 @@
 public with sharing class DocumentValidationUtil
 {
     private static SpanishDocumentValidation spain_instance;
-    public SpanishDocumentValidation Spain
+
+    public LocaleValidations Locale
     {
         get
         {
-            if ( spain_instance == null)
+            if ( Locale == null)
             {
-                spain_instance = new SpanishDocumentValidation();
+                Locale = new LocaleValidations();
             }
-            return spain_instance;
+            return Locale;
         }
         private set;
+    }
+
+    public class LocaleValidations
+    {
+        private LocaleValidations(){}
+        public SpanishDocumentValidation Spain
+        {
+            get
+            {
+                if ( spain_instance == null)
+                {
+                    spain_instance = new SpanishDocumentValidation();
+                }
+                return spain_instance;
+            }
+            private set;
+        }
     }
 
     public Boolean isEmailValid(String email)
