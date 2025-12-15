@@ -1,60 +1,78 @@
 # Utilities Folder
 
-This folder contains utility classes for the Salesforce project, separate from the main force-app structure.
+This folder contains utility classes for the Salesforce project, separate from the main `force-app` structure. It is deployable independently as its own package directory.
 
 ## Structure
 
-- **GurkUtils.cls** - Main utility class that provides access to other utility classes
-- **DocumentUtils.cls** - Utility class for document-related operations
-- **DocumentValidationUtil.cls** - Utility class for document validation operations
-- **DocumentGenerationUtil.cls** - Utility class for document generation operations
-- **SpanishDocumentGenerator.cls** - Specific generator utilities for Spanish documents
+- Utils.cls — Main facade entry point (GurkUtils) to access sub-modules
+- DocumentUtilities/
+  - DocumentationUtil.cls — Helpers to produce human-readable documentation messages
+  - DocumentGenerationUtil.cls — Random/valid Spanish document number generators (DNI/NIE/CIF)
+  - DocumentValidationUtil.cls — Validation helpers and orchestration
+  - Locale/es/
+    - SpanishDocumentGenerator.cls — Spain-specific document number generators
+    - SpanishDocumentValidation.cls — Spain-specific validators (DNI/NIE/CIF)
+- Tests/
+  - SpanishDocumentValidationTest.cls — Unit tests for Spain validators
 
-## Usage
+## Usage (Apex)
 
-Access the utilities using the following patterns:
+Use the actual classes and properties provided by the codebase:
 
 ```apex
-// Access DocumentUtils
-GurkUtils.Documents;
+// Root facade
+Utils.Documentation;
 
-// Access DocumentValidationUtil
-GurkUtils.Documents.validation;
+// Validation access
+Utils.Documentation.Validation;
 
-// Access SpanishDocumentValidation
-GurkUtils.Documents.validation.Spain;
+// Spain-specific validators
+Utils.Documentation.Validation.Locale.Spain;
 
 // Validate DNI
-Boolean isValid = GurkUtils.Documents.validation.Spain.isDNIValid('12345678Z');
+Boolean isValidDni = Utils.Documentation.Validation.Locale.Spain.isDNIValid('12345678Z');
 
 // Validate NIE
-Boolean isValid = GurkUtils.Documents.validation.Spain.isNIEValid('X1234567Z');
+Boolean isValidNie = Utils.Documentation.Validation.Locale.Spain.isNIEValid('X1234567Z');
 
 // Validate CIF
-Boolean isValid = GurkUtils.Documents.validation.Spain.isCIFValid('A12345678');
+Boolean isValidCif = Utils.Documentation.Validation.Locale.Spain.isCIFValid('A12345678');
 
-// Access DocumentGenerationUtil
-GurkUtils.Documents.generator;
-
-// Access SpanishDocumentGenerator
-GurkUtils.Documents.generator.Spain;
+// Generators access
+Utils.Documentation.Generation;
+Utils.Documentation.Generation.Locale.Spain;
 
 // Generate DNI
-String dni = GurkUtils.Documents.generator.Spain.generateDNI();
+String dni = Utils.Documentation.Generation.Locale.Spain.generateDNI();
 
 // Generate NIE
-String nie = GurkUtils.Documents.generator.Spain.generateNIE();
+String nie = Utils.Documentation.Generation.Locale.Spain.generateNIE();
 
 // Generate CIF
-String cif = GurkUtils.Documents.generator.Spain.generateCIF();
+String cif = Utils.Documentation.Generation.Locale.Spain.generateCIF();
 ```
+
+## Quick Start
+
+- Login to target org:
+  - `sf org login web`
+- Deploy only this utils package directory:
+  - `sf project deploy start --source-dir utils`
+- Run tests:
+  - `sf apex run test --tests SpanishDocumentValidationTest`
+
+Notes:
+
+- Always use `sf` CLI (not `sfdx`).
+- This `utils` directory can be deployed independently from `force-app`.
 
 ## Project Configuration
 
-This directory is configured as a separate package directory in `sfdx-project.json`, allowing it to be deployed independently from the main force-app directory.
-Add the following code into the sfdx-project.json file in the projects packageDirectories list section:
+Ensure `sfdx-project.json` includes the `utils` package directory:
 
+```json
 {
-"path": "utils",
-"default": false
+  "path": "utils",
+  "default": false
 }
+```

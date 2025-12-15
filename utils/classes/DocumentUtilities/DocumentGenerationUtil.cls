@@ -2,16 +2,36 @@ public with sharing class DocumentGenerationUtil
 {
     private static SpanishDocumentGenerator spain_instance;
 
-    public SpanishDocumentGenerator Spain
+    public LocaleGeneration Locale
     {
         get
         {
-            if ( spain_instance == null)
+            if ( Locale == null)
             {
-                spain_instance = new SpanishDocumentGenerator();
+                Locale = new LocaleGeneration();
             }
-            return spain_instance;
+            return Locale;
         }
         private set;
     }
+
+    public class LocaleGeneration
+    {
+        private LocaleGeneration(){}
+        public SpanishDocumentGenerator Spain
+        {
+            get
+            {
+                if ( spain_instance == null)
+                {
+                    spain_instance = new SpanishDocumentGenerator();
+                }
+                return spain_instance;
+            }
+            private set;
+        }
+    }
+
+
+
 }

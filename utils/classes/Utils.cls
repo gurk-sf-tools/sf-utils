@@ -1,16 +1,16 @@
 public with sharing class Utils
 {
-    private static DocumentationUtil documentations_instance;
+    private static DocumentationUtil documentation_instance;
 
-    public static DocumentationUtil Documentations
+    public static DocumentationUtil Documentation
     {
         get
         {
-            if ( documentations_instance == null)
+            if ( documentation_instance == null)
             {
-                documentations_instance = new DocumentationUtil();
+                documentation_instance = new DocumentationUtil();
             }
-            return documentations_instance;
+            return documentation_instance;
         }
         private set;
     }

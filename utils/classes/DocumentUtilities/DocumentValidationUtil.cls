@@ -2,22 +2,22 @@ public with sharing class DocumentValidationUtil
 {
     private static SpanishDocumentValidation spain_instance;
 
-    public LocaleValidations Locale
+    public LocaleValidation Locale
     {
         get
         {
             if ( Locale == null)
             {
-                Locale = new LocaleValidations();
+                Locale = new LocaleValidation();
             }
             return Locale;
         }
         private set;
     }
 
-    public class LocaleValidations
+    public class LocaleValidation
     {
-        private LocaleValidations(){}
+        private LocaleValidation(){}
         public SpanishDocumentValidation Spain
         {
             get

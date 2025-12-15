@@ -16,7 +16,7 @@ public with sharing class DocumentationUtil
         private set;
     }
 
-    public DocumentGenerationUtil Generator
+    public DocumentGenerationUtil Generation
     {
         get
         {
