@@ -8,10 +8,15 @@ This folder contains utility classes for the Salesforce project, separate from t
 - DocumentUtilities/
   - DocumentationUtil.cls — Helpers to produce human-readable documentation messages
   - DocumentGenerationUtil.cls — Random/valid Spanish document number generators (DNI/NIE/CIF)
-  - DocumentValidationUtil.cls — Validation helpers and orchestration (Email)
+  - DocumentValidationUtil.cls — Validation helpers and orchestration
+    - Email
   - Locale/es/
     - SpanishDocumentGenerator.cls — Spain-specific document number generators
-    - SpanishDocumentValidation.cls — Spain-specific validators (DNI/NIE/CIF/SSN)
+    - SpanishDocumentValidation.cls — Spain-specific validators
+      - DNI
+      - NIE
+      - CIF
+      - NUSS
 - Tests/
   - SpanishDocumentValidationTest.cls — Unit tests for Spain validators
 
