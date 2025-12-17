@@ -6,14 +6,14 @@ public with sharing class SpanishDocumentValidation
 {
     public Boolean isDNIValid(String dni)
     {
-        if (String.isEmpty(dni) || dni.length() != 9)
+        if (String.isEmpty(dni))
         {
             return false;
         }
 
         dni = dni.trim().toUpperCase();
 
-        if ( ! Pattern.matches('[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKE]$', dni))
+        if (dni.length() != 9 || ! Pattern.matches('[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKE]$', dni))
         {
 			return false;
 		}
@@ -33,14 +33,14 @@ public with sharing class SpanishDocumentValidation
 
     public Boolean isNIEValid(String nie)
     {
-        if( String.isEmpty(nie) || nie.length() != 9)
+        if( String.isEmpty(nie))
         {
             return false;
         }
 
         nie = nie.trim().toUpperCase();
 
-		if ( ! Pattern.matches('^[XYZ][0-9]{7}[TRWAGMYFPDXBNJZSQVHLCKE]$', nie))
+		if (nie.length() != 9 || ! Pattern.matches('^[XYZ][0-9]{7}[TRWAGMYFPDXBNJZSQVHLCKE]$', nie))
         {
 			return false;
 		}
@@ -84,7 +84,7 @@ public with sharing class SpanishDocumentValidation
 
     public Boolean isCIFValid(String cif)
     {
-        if (String.isBlank(cif) || cif.length() != 9)
+        if (String.isBlank(cif))
         {
             return false;
         }
@@ -92,7 +92,7 @@ public with sharing class SpanishDocumentValidation
         cif = cif.trim().toUpperCase();
 
         // Formato básico: letra + 7 números + dígito/letra
-        if ( ! Pattern.matches('^[ABCDEFGHJKLMNPQRSUVW][0-9]{7}[0-9A-J]$', cif))
+        if ( cif.length() != 9 || ! Pattern.matches('^[ABCDEFGHJKLMNPQRSUVW][0-9]{7}[0-9A-J]$', cif))
         {
             return false;
         }
@@ -160,4 +160,48 @@ public with sharing class SpanishDocumentValidation
         return letters.substring(remainder, remainder + 1) == letter;
     }
 
+    public static Boolean isNUSSValid(String ssn)
+    {
+        if (String.isBlank(ssn))
+        {
+            return false;
+        }
+
+        ssn = ssn.trim();
+
+        if (ssn.length() != 12 || !Pattern.matches('^[0-9]{12}$', ssn))
+        {
+            return false;
+        }
+
+        // Extract parts
+        String provinceStr = ssn.substring(0, 2);
+        String affiliateStr = ssn.substring(2, 10);
+        String controlStr = ssn.substring(10, 12);
+
+        System.debug('provinceStr ' + provinceStr);
+        System.debug('affiliateStr ' + affiliateStr);
+        System.debug('controlStr ' + controlStr);
+
+        // Province 01..52
+        Integer provinceInt = Integer.valueOf(provinceStr);
+        System.debug('provinceInt ' + provinceInt);
+
+
+        if (provinceInt <= 0 || provinceInt > 52)
+        {
+            return false;
+        }
+
+        Long numericPart = Long.valueOf(provinceStr + affiliateStr);
+        System.debug('numericPart ' + numericPart);
+        // Control = numericPart mod 97
+        Integer expectedControl = (Integer) Math.mod(numericPart, 97);
+        System.debug('expectedControl ' + expectedControl);
+        // Compare as two-digit string (left-pad with 0)
+        String expectedControlStr = expectedControl < 10 ? '0' + String.valueOf(expectedControl) : String.valueOf(expectedControl);
+        System.debug('expectedControlStr ' + expectedControlStr);
+        System.debug(expectedControlStr == controlStr);
+        return expectedControlStr.equals(controlStr);
+    }
 }

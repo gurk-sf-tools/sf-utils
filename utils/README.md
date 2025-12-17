@@ -8,10 +8,10 @@ This folder contains utility classes for the Salesforce project, separate from t
 - DocumentUtilities/
   - DocumentationUtil.cls — Helpers to produce human-readable documentation messages
   - DocumentGenerationUtil.cls — Random/valid Spanish document number generators (DNI/NIE/CIF)
-  - DocumentValidationUtil.cls — Validation helpers and orchestration
+  - DocumentValidationUtil.cls — Validation helpers and orchestration (Email)
   - Locale/es/
     - SpanishDocumentGenerator.cls — Spain-specific document number generators
-    - SpanishDocumentValidation.cls — Spain-specific validators (DNI/NIE/CIF)
+    - SpanishDocumentValidation.cls — Spain-specific validators (DNI/NIE/CIF/SSN)
 - Tests/
   - SpanishDocumentValidationTest.cls — Unit tests for Spain validators
 
@@ -26,6 +26,9 @@ Utils.Documentation;
 // Validation access
 Utils.Documentation.Validation;
 
+// Validate Email
+Boolean isValidEmail = Utils.Documentation.Validation.isEmailValid('user@example.com');
+
 // Spain-specific validators
 Utils.Documentation.Validation.Locale.Spain;
 
@@ -37,6 +40,9 @@ Boolean isValidNie = Utils.Documentation.Validation.Locale.Spain.isNIEValid('X12
 
 // Validate CIF
 Boolean isValidCif = Utils.Documentation.Validation.Locale.Spain.isCIFValid('A12345678');
+
+// Validate Spanish Social Security Number (NAf - 12 digits, mod 97 control)
+Boolean isValidSSN = Utils.Documentation.Validation.Locale.Spain.isSSNValid('281234567874');
 
 // Generators access
 Utils.Documentation.Generation;
@@ -50,6 +56,7 @@ String nie = Utils.Documentation.Generation.Locale.Spain.generateNIE();
 
 // Generate CIF
 String cif = Utils.Documentation.Generation.Locale.Spain.generateCIF();
+
 ```
 
 ## Quick Start

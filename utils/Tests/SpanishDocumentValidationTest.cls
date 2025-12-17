@@ -1,5 +1,36 @@
 @IsTest
-private class SpanishDocumentValidationTest {
+private class SpanishDocumentValidationTest
+{
+    @IsTest
+    static void test_isNUSSValid()
+    {
+        String valid1 = '281234567840';
+        System.assertEquals(true, SpanishDocumentValidation.isNUSSValid(valid1), 'Expected valid SSN 1');
+
+        String valid2 = '010000000182';
+        System.assertEquals(true, SpanishDocumentValidation.isNUSSValid(valid2), 'Expected valid SSN 2');
+
+        // Invalid: Empty
+        System.assertEquals(false, SpanishDocumentValidation.isNUSSValid(''), 'Too short should be invalid');
+        System.assertEquals(false, SpanishDocumentValidation.isNUSSValid(null), 'Too short should be invalid');
+        System.assertEquals(false, SpanishDocumentValidation.isNUSSValid('   '), 'Too short should be invalid');
+        System.assertEquals(false, SpanishDocumentValidation.isNUSSValid('            '), '12 spaces should be invalid');
+
+        // Invalid: wrong length
+        System.assertEquals(false, SpanishDocumentValidation.isNUSSValid('123'), 'Too short should be invalid');
+
+        // Invalid: non-digits
+        System.assertEquals(false, SpanishDocumentValidation.isNUSSValid('28A234567874'), 'Non-digit should be invalid');
+
+        // Invalid: province 00
+        // numeric control would compute but province 00 is not allowed
+        String invalidProvince = '001234567801';
+        System.assertEquals(false, SpanishDocumentValidation.isNUSSValid(invalidProvince), 'Province 00 should be invalid');
+
+        // Invalid: wrong control digits for valid numeric part
+        // Using valid1's numeric but alter control
+        System.assertEquals(false, SpanishDocumentValidation.isNUSSValid('281234567800'), 'Wrong control should be invalid');
+    }
     /**
      * Valid DNI samples that should pass the validator.
      * The DNI control letter equals 'TRWAGMYFPDXBNJZSQVHLCKE'[num % 23]

@@ -34,7 +34,19 @@ public with sharing class DocumentValidationUtil
 
     public Boolean isEmailValid(String email)
     {
-        return true;
+        if (String.isEmpty(email))
+        {
+            return false;
+        }
+
+        email = email.trim().toLowerCase();
+
+        if(email.length() > 254)
+        {
+            return false;
+        }
+
+        return Pattern.matches('^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$', email);
     }
 
 }
